@@ -1,5 +1,9 @@
 package com.chcraft.sqlrelation.entity;
 
-public class Entity {
+import java.util.List;
 
+public interface Entity {
+	String getName();
+	String getPrimaryKey();
+	List<Column> getColumns();
 }
