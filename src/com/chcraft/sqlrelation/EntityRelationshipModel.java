@@ -20,6 +20,22 @@ public class EntityRelationshipModel {
 		this.relations = relations;
 	}
 
+	public List<Entity> getEntities() {
+		return entities;
+	}
+
+	public void setEntities(List<Entity> entities) {
+		this.entities = entities;
+	}
+
+	public List<Relation> getRelations() {
+		return relations;
+	}
+
+	public void setRelations(List<Relation> relations) {
+		this.relations = relations;
+	}
+
 	public boolean addEntity(Entity entity) {
 		return entities.add(entity);
 	}
