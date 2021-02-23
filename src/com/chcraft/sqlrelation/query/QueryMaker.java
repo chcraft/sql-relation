@@ -19,6 +19,8 @@ public class QueryMaker {
 		//Add foreign key constraint and foreign key field
 		for(Relation relation : model.getRelations()) {
 			//ALTER TABLE ... FOREIGN KEY CONSTRAINT ...
+			query.append(createQuery(relation));
+			query.append("대충 외래키 제약조건하고 외래키 필드 추가했다는 내용.\n\n");
 		}
 
 		return query.toString();
@@ -38,6 +40,7 @@ public class QueryMaker {
 		char seperator = ' ';
 		for(Column column : entity.getColumns()) {
 			query.append(seperator);
+			query.append('\n');
 			seperator = ',';
 
 			query.append(column.getName());
@@ -47,13 +50,13 @@ public class QueryMaker {
 			//query.append(Column options); COLUMN NOT YET SUPPORT COLUMN OPTIONS
 		}
 
-		query.append(")");
+		query.append("\n)");
 
 		return query.toString();
 	}
 
-
-
-
-
+	public String createQuery(Relation relation) {
+		//TODO : not implemented method
+		return null;
+	}
 }
