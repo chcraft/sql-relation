@@ -52,8 +52,4 @@ public class QueryMaker {
 		return query.toString();
 	}
 
-
-
-
-
 }
