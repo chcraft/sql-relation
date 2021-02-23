@@ -14,7 +14,7 @@ public class QueryMaker {
 	 * @param model
 	 * @return entity and relation query
 	 */
-	public String createQuery(EntityRelationshipModel model) {
+	public static String createQuery(EntityRelationshipModel model) {
 		StringBuilder query = new StringBuilder();
 
 		//Create tables first
@@ -39,7 +39,7 @@ public class QueryMaker {
 	 * @param entity
 	 * @return table create query about entity
 	 */
-	public String createQuery(Entity entity) {
+	public static String createQuery(Entity entity) {
 		StringBuilder query = new StringBuilder();
 
 		/*
@@ -79,8 +79,7 @@ public class QueryMaker {
 	 * @param relation
 	 * @return foreign key constraint query about relation
 	 */
-	public String createQuery(Relation relation) {
-		//TODO : not implemented method
+	public static String createQuery(Relation relation) {
 		StringBuilder query = new StringBuilder();
 
 		/*
