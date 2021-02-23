@@ -71,6 +71,50 @@ public class QueryMaker {
 	 */
 	public String createQuery(Relation relation) {
 		//TODO : not implemented method
-		return null;
+		StringBuilder query = new StringBuilder();
+
+		/*
+		 * ALTER TABLE [ORIGIN_NAME]
+		 * ADD COLUMN [FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME] [FOREIGN_PRIMARY_KEY_DATATYPE],
+		 * ADD FOREIGN KEY ([FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME]) REFERENCES ([FOREIGN_NAME].[FOREIGN_PRIMARY_KEY_NAME])
+		 * */
+
+		query.append(SQLKeyword.ALTER);
+		query.append(" ");
+		query.append(SQLKeyword.TABLE);
+		query.append(" ");
+		query.append(relation.getOrigin().getName());
+		query.append("\n");
+		query.append(SQLKeyword.ADD);
+		query.append(" ");
+		query.append(SQLKeyword.COLUMN);
+		query.append(" ");
+		query.append(relation.getForeign().getName());
+		query.append("_");
+		query.append(relation.getForeign().getPrimaryKey().getName());
+		query.append(" ");
+		query.append(relation.getForeign().getPrimaryKey().getDatatype());
+		query.append(",\n");
+		query.append(SQLKeyword.ADD);
+		query.append(" ");
+		query.append(SQLKeyword.FOREIGN);
+		query.append(" ");
+		query.append(SQLKeyword.KEY);
+		query.append(" ");
+		query.append("(");
+		query.append(relation.getForeign().getName());
+		query.append("_");
+		query.append(relation.getForeign().getPrimaryKey().getName());
+		query.append(")");
+		query.append(" ");
+		query.append(SQLKeyword.REFERENCES);
+		query.append(" ");
+		query.append("(");
+		query.append(relation.getForeign().getName());
+		query.append(".");
+		query.append(relation.getForeign().getPrimaryKey().getName());
+		query.append(")");
+
+		return query.toString();
 	}
 }
