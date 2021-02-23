@@ -4,6 +4,7 @@ import com.chcraft.sqlrelation.EntityRelationshipModel;
 import com.chcraft.sqlrelation.entity.Column;
 import com.chcraft.sqlrelation.entity.Entity;
 import com.chcraft.sqlrelation.relation.Relation;
+import com.chcraft.sqlrelation.relation.RelationType;
 
 public class QueryMaker {
 
@@ -24,9 +25,11 @@ public class QueryMaker {
 
 		//Add foreign key constraint and foreign key field
 		for(Relation relation : model.getRelations()) {
-			//ALTER TABLE ... FOREIGN KEY CONSTRAINT ...
+			if(relation.getRelationType() != RelationType.MANY_TO_ONE)
+				continue;
+
 			query.append(createQuery(relation));
-			query.append("대충 외래키 제약조건하고 외래키 필드 추가했다는 내용.\n\n");
+			query.append(";\n\n");
 		}
 
 		return query.toString();
@@ -38,6 +41,13 @@ public class QueryMaker {
 	 */
 	public String createQuery(Entity entity) {
 		StringBuilder query = new StringBuilder();
+
+		/*
+		 * CREATE TABLE [ENTITY_NAME] (
+		 * COLUMN_NAME DATATYPE [OPTIONS...],
+		 * ...
+		 * )
+		 */
 
 		query.append(SQLKeyword.CREATE);
 		query.append(" ");
@@ -76,7 +86,7 @@ public class QueryMaker {
 		/*
 		 * ALTER TABLE [ORIGIN_NAME]
 		 * ADD COLUMN [FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME] [FOREIGN_PRIMARY_KEY_DATATYPE],
-		 * ADD FOREIGN KEY ([FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME]) REFERENCES ([FOREIGN_NAME].[FOREIGN_PRIMARY_KEY_NAME])
+		 * ADD FOREIGN KEY ([FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME]) REFERENCES [FOREIGN_NAME]([FOREIGN_PRIMARY_KEY_NAME])
 		 * */
 
 		query.append(SQLKeyword.ALTER);
@@ -109,9 +119,8 @@ public class QueryMaker {
 		query.append(" ");
 		query.append(SQLKeyword.REFERENCES);
 		query.append(" ");
-		query.append("(");
 		query.append(relation.getForeign().getName());
-		query.append(".");
+		query.append("(");
 		query.append(relation.getForeign().getPrimaryKey().getName());
 		query.append(")");
 
