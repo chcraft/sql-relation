@@ -7,6 +7,12 @@ import com.chcraft.sqlrelation.relation.Relation;
 
 public class QueryMaker {
 
+	/***
+	 * this method create query about entity without foreign key.
+	 * after create tables, it add foreign key constraint and foreign key field.
+	 * @param model
+	 * @return entity and relation query
+	 */
 	public String createQuery(EntityRelationshipModel model) {
 		StringBuilder query = new StringBuilder();
 
@@ -26,6 +32,10 @@ public class QueryMaker {
 		return query.toString();
 	}
 
+	/***
+	 * @param entity
+	 * @return table create query about entity
+	 */
 	public String createQuery(Entity entity) {
 		StringBuilder query = new StringBuilder();
 
@@ -55,6 +65,10 @@ public class QueryMaker {
 		return query.toString();
 	}
 
+	/***
+	 * @param relation
+	 * @return foreign key constraint query about relation
+	 */
 	public String createQuery(Relation relation) {
 		//TODO : not implemented method
 		return null;
