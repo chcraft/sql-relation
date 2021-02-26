@@ -39,4 +39,9 @@ public class Relation {
 	public void setRelationType(RelationType relationType) {
 		this.relationType = relationType;
 	}
+
+	@Override
+	public String toString() {
+		return "[ " + origin.getName() + " " + relationType.toString() + " " + foreign.getName() + " ]";
+	}
 }
