@@ -11,6 +11,15 @@ public class Entity {
 		this.columns = new ArrayList<>();
 	}
 
+	public Entity(String name) {
+		this.name = name;
+	}
+
+	public Entity(String name, List<Column> columns) {
+		this.name = name;
+		this.columns = columns;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -27,8 +36,16 @@ public class Entity {
 		this.columns = columns;
 	}
 
+	/***
+	 * @return primary key column if exist. if primary key is not exist return null.
+	 */
 	public Column getPrimaryKey() {
-		// TODO : not implemented method.
+		for(Column column : columns) {
+			for(ColumnOption option : column.getOptions()) {
+				if(option == ColumnOption.PK)
+					return column;
+			}
+		}
 		return null;
 	}
 
