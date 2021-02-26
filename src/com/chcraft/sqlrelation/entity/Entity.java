@@ -11,6 +11,15 @@ public class Entity {
 		this.columns = new ArrayList<>();
 	}
 
+	public Entity(String name) {
+		this.name = name;
+	}
+
+	public Entity(String name, List<Column> columns) {
+		this.name = name;
+		this.columns = columns;
+	}
+
 	public String getName() {
 		return name;
 	}
