@@ -2,6 +2,7 @@ package com.chcraft.sqlrelation.query;
 
 import com.chcraft.sqlrelation.EntityRelationshipModel;
 import com.chcraft.sqlrelation.entity.Column;
+import com.chcraft.sqlrelation.entity.ColumnOption;
 import com.chcraft.sqlrelation.entity.Entity;
 import com.chcraft.sqlrelation.relation.Relation;
 import com.chcraft.sqlrelation.relation.RelationType;
@@ -67,7 +68,10 @@ public class QueryMaker {
 			query.append(" ");
 			query.append(column.getDatatype());
 			query.append(" ");
-			//query.append(Column options); COLUMN NOT YET SUPPORT COLUMN OPTIONS
+			for(ColumnOption option : column.getOptions()) {
+				query.append(option.initialToOrigin());
+				query.append(" ");
+			}
 		}
 
 		query.append("\n)");
