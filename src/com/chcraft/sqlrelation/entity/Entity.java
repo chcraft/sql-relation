@@ -13,6 +13,7 @@ public class Entity {
 
 	public Entity(String name) {
 		this.name = name;
+		this.columns = new ArrayList<>();
 	}
 
 	public Entity(String name, List<Column> columns) {
