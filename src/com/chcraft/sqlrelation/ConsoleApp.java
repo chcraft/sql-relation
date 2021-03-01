@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.chcraft.sqlrelation.entity.Column;
+import com.chcraft.sqlrelation.entity.ColumnOption;
 import com.chcraft.sqlrelation.entity.Entity;
 import com.chcraft.sqlrelation.relation.Relation;
+import com.chcraft.sqlrelation.relation.RelationType;
 
 public class ConsoleApp {
 	private static List<EntityRelationshipModel> models = new ArrayList<EntityRelationshipModel>();
@@ -21,6 +24,22 @@ public class ConsoleApp {
 	private static final int QUIT_COMMAND = 4;
 
 	public static void main(String[] args) {
+		//add entity and relations for test
+		Entity student = new Entity("student");
+		Entity school = new Entity("school");
+
+		Column id = new Column("id", "INT");
+		id.addOption(ColumnOption.PK);
+		id.addOption(ColumnOption.AI);
+		Column name = new Column("name", "VARCHAR(50)");
+		name.addOption(ColumnOption.NN);
+
+		Relation studentSchool = new Relation(student, school, RelationType.MANY_TO_ONE);
+
+		entities.add(student);
+		entities.add(school);
+		relations.add(studentSchool);
+
 		System.out.println("SQL RELATION MODEL MAKER(demo)");
 		System.out.println();
 		int command;
@@ -95,6 +114,7 @@ public class ConsoleApp {
 		System.out.print("model name:");
 		String name = sc.next();
 		model.setName(name);
+		models.add(model);
 		modifyERMCommand(name);
 
 		// save or quit without save
@@ -112,6 +132,7 @@ public class ConsoleApp {
 				return;
 			} else if (command == QUIT_WITHOUT_SAVE) {
 				System.out.println("quit without save");
+				models.remove(model);
 				return;
 			} else {
 				System.out.println("invalid command");
@@ -188,21 +209,54 @@ public class ConsoleApp {
 		}
 	}
 
-	private static void showExistRelations() {
-		for(int i = 0; i < relations.size(); i++) {
-			System.out.printf("%d %s", i, relations.get(i).toString());
+	private static Entity selectEntity(List<Entity> entities) {
+		if(entities.size() == 0)
+			return null;
+
+		while(true) {
+			int index = readCommand();
+			if(index <= 0 || index > entities.size()) {
+				System.out.println("out of range");
+			}
+
+			return entities.get(index - 1);
 		}
 	}
 
+	private static void showExistEntities(List<Entity> entities) {
+		System.out.println("Entity List");
+		for(int i = 0; i < entities.size(); i++) {
+			System.out.printf("%d. %s\n", i + 1, entities.get(i).toString());
+		}
+
+	}
+
+	private static void showExistEntities() {
+		showExistEntities(entities);
+	}
+
+	private static EntityRelationshipModel getModel(String name) {
+		// TODO Auto-generated method stub
+		for(EntityRelationshipModel model : models) {
+			if(model.getName().equals(name))
+				return model;
+		}
+
+		return null;
+	}
+
+	private static void showExistRelations() {
+		showExistRelations(relations);
+	}
+
 	private static void showExistRelations(List<Relation> relations) {
+		System.out.println("Relation List");
 		for(int i = 0; i < relations.size(); i++) {
-			System.out.printf("%d %s", i, relations.get(i).toString());
+			System.out.printf("%d. %s\n", i + 1, relations.get(i).toString());
 		}
 	}
 
 	private static Relation selectRelation(List<Relation> relations) {
-		showExistRelations(relations);
-
 		if(relations.size() == 0)
 			return null;
 
