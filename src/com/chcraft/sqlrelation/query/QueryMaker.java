@@ -21,7 +21,7 @@ public class QueryMaker {
 		//Create tables first
 		for(Entity entity : model.getEntities()) {
 			query.append(createQuery(entity));
-			query.append(";\n\n");
+			query.append("\n\n");
 		}
 
 		//Add foreign key constraint and foreign key field
@@ -30,7 +30,7 @@ public class QueryMaker {
 				continue;
 
 			query.append(createQuery(relation));
-			query.append(";\n\n");
+			query.append("\n\n");
 		}
 
 		return query.toString();
@@ -47,7 +47,7 @@ public class QueryMaker {
 		 * CREATE TABLE [ENTITY_NAME] (
 		 * COLUMN_NAME DATATYPE [OPTIONS...],
 		 * ...
-		 * )
+		 * );
 		 */
 
 		query.append(SQLKeyword.CREATE);
@@ -74,7 +74,7 @@ public class QueryMaker {
 			}
 		}
 
-		query.append("\n)");
+		query.append("\n);");
 
 		return query.toString();
 	}
@@ -89,7 +89,7 @@ public class QueryMaker {
 		/*
 		 * ALTER TABLE [ORIGIN_NAME]
 		 * ADD COLUMN [FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME] [FOREIGN_PRIMARY_KEY_DATATYPE],
-		 * ADD FOREIGN KEY ([FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME]) REFERENCES [FOREIGN_NAME]([FOREIGN_PRIMARY_KEY_NAME])
+		 * ADD FOREIGN KEY ([FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME]) REFERENCES [FOREIGN_NAME]([FOREIGN_PRIMARY_KEY_NAME]);
 		 * */
 
 		query.append(SQLKeyword.ALTER);
@@ -125,7 +125,7 @@ public class QueryMaker {
 		query.append(relation.getForeign().getName());
 		query.append("(");
 		query.append(relation.getForeign().getPrimaryKey().getName());
-		query.append(")");
+		query.append(");");
 
 		return query.toString();
 	}
