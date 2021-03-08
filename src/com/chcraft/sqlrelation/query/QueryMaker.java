@@ -44,7 +44,7 @@ public class QueryMaker {
 		StringBuilder query = new StringBuilder();
 
 		/*
-		 * CREATE TABLE [ENTITY_NAME] (
+		 * CREATE TABLE `[ENTITY_NAME]` (
 		 * COLUMN_NAME DATATYPE [OPTIONS...],
 		 * ...
 		 * );
@@ -53,9 +53,9 @@ public class QueryMaker {
 		query.append(SQLKeyword.CREATE);
 		query.append(" ");
 		query.append(SQLKeyword.TABLE);
-		query.append(" ");
+		query.append(" `");
 		query.append(entity.getName());
-		query.append(" ");
+		query.append("` ");
 		query.append("(");
 
 		char seperator = ' ';
@@ -87,17 +87,17 @@ public class QueryMaker {
 		StringBuilder query = new StringBuilder();
 
 		/*
-		 * ALTER TABLE [ORIGIN_NAME]
+		 * ALTER TABLE `[ORIGIN_NAME]`
 		 * ADD COLUMN [FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME] [FOREIGN_PRIMARY_KEY_DATATYPE],
-		 * ADD FOREIGN KEY ([FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME]) REFERENCES [FOREIGN_NAME]([FOREIGN_PRIMARY_KEY_NAME]);
+		 * ADD FOREIGN KEY ([FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME]) REFERENCES `[FOREIGN_NAME]`([FOREIGN_PRIMARY_KEY_NAME]);
 		 * */
 
 		query.append(SQLKeyword.ALTER);
 		query.append(" ");
 		query.append(SQLKeyword.TABLE);
-		query.append(" ");
+		query.append(" `");
 		query.append(relation.getOrigin().getName());
-		query.append("\n");
+		query.append("`\n");
 		query.append(SQLKeyword.ADD);
 		query.append(" ");
 		query.append(SQLKeyword.COLUMN);
@@ -121,9 +121,9 @@ public class QueryMaker {
 		query.append(")");
 		query.append(" ");
 		query.append(SQLKeyword.REFERENCES);
-		query.append(" ");
+		query.append(" `");
 		query.append(relation.getForeign().getName());
-		query.append("(");
+		query.append("`(");
 		query.append(relation.getForeign().getPrimaryKey().getName());
 		query.append(");");
 
