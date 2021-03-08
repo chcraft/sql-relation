@@ -10,23 +10,24 @@ import com.chcraft.sqlrelation.relation.RelationType;
 public class QueryMaker {
 
 	/***
-	 * this method create query about entity without foreign key.
-	 * after create tables, it add foreign key constraint and foreign key field.
+	 * this method create query about entity without foreign key. after create
+	 * tables, it add foreign key constraint and foreign key field.
+	 *
 	 * @param model
 	 * @return entity and relation query
 	 */
 	public static String createQuery(EntityRelationshipModel model) {
 		StringBuilder query = new StringBuilder();
 
-		//Create tables first
-		for(Entity entity : model.getEntities()) {
+		// Create tables first
+		for (Entity entity : model.getEntities()) {
 			query.append(createQuery(entity));
 			query.append("\n\n");
 		}
 
-		//Add foreign key constraint and foreign key field
-		for(Relation relation : model.getRelations()) {
-			if(relation.getRelationType() != RelationType.MANY_TO_ONE)
+		// Add foreign key constraint and foreign key field
+		for (Relation relation : model.getRelations()) {
+			if (relation.getRelationType() != RelationType.MANY_TO_ONE)
 				continue;
 
 			query.append(createQuery(relation));
@@ -44,10 +45,7 @@ public class QueryMaker {
 		StringBuilder query = new StringBuilder();
 
 		/*
-		 * CREATE TABLE `[ENTITY_NAME]` (
-		 * COLUMN_NAME DATATYPE [OPTIONS...],
-		 * ...
-		 * );
+		 * CREATE TABLE `[ENTITY_NAME]` ( COLUMN_NAME DATATYPE [OPTIONS...], ... );
 		 */
 
 		query.append(SQLKeyword.CREATE);
@@ -59,7 +57,7 @@ public class QueryMaker {
 		query.append("(");
 
 		char seperator = ' ';
-		for(Column column : entity.getColumns()) {
+		for (Column column : entity.getColumns()) {
 			query.append(seperator);
 			query.append('\n');
 			seperator = ',';
@@ -68,7 +66,7 @@ public class QueryMaker {
 			query.append(" ");
 			query.append(column.getDatatype());
 			query.append(" ");
-			for(ColumnOption option : column.getOptions()) {
+			for (ColumnOption option : column.getOptions()) {
 				query.append(option.initialToOrigin());
 				query.append(" ");
 			}
@@ -87,10 +85,11 @@ public class QueryMaker {
 		StringBuilder query = new StringBuilder();
 
 		/*
-		 * ALTER TABLE `[ORIGIN_NAME]`
-		 * ADD COLUMN [FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME] [FOREIGN_PRIMARY_KEY_DATATYPE],
-		 * ADD FOREIGN KEY ([FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME]) REFERENCES `[FOREIGN_NAME]`([FOREIGN_PRIMARY_KEY_NAME]);
-		 * */
+		 * ALTER TABLE `[ORIGIN_NAME]` ADD COLUMN
+		 * [FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME] [FOREIGN_PRIMARY_KEY_DATATYPE], ADD
+		 * FOREIGN KEY ([FOREIGN_NAME]_[FOREIGN_PRIMARY_KEY_NAME]) REFERENCES
+		 * `[FOREIGN_NAME]`([FOREIGN_PRIMARY_KEY_NAME]);
+		 */
 
 		query.append(SQLKeyword.ALTER);
 		query.append(" ");
